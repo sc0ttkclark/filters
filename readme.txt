@@ -1,6 +1,6 @@
 === Filters ===
 Contributors: sc0ttkclark, logikal16
-Donate link: https://uproot.us/contributors/
+Donate link: http://podsfoundation.org/donate/
 Tags: admin, filters, edit
 Requires at least: 3.4
 Tested up to: 3.5
