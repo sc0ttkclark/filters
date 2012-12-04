@@ -12,7 +12,23 @@ A flexible replacement for the default WordPress post management. Takes over edi
 
 == Description ==
 
-A new plugin for WordPress that lets you use an enhanced UI for your post types search/filtering to really clean up the experience.
+This plugin lets you use an enhanced UI for your post types search/filtering to really clean up the experience.
+
+It is a prototype right now, there are no options and there may be a few bugs as it's tested across more environments.
+
+== Installation ==
+
+1. Unpack the entire contents of this plugin zip file into your `wp-content/plugins/` folder locally
+1. Upload to your site
+1. Navigate to `wp-admin/plugins.php` on your site (your WP Admin plugin page)
+1. Activate this plugin
+
+OR you can just install it with WordPress by going to Plugins >> Add New >> and type this plugin's name
+
+== Screenshots ==
+
+1. An enhanced UI for search / filtering that's tucked away under a pop-up to do advanced filtering
+2. The advanced filtering pop-up
 
 == Changelog ==
 
