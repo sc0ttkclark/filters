@@ -17,8 +17,9 @@ function filters_ui () {
 
     $pagenow = 'edit.php';
 
-    if ( 'event' != $typenow )
-        return;
+    // @todo Check if post type is covered
+    /*if ( 'post_type_name' != $typenow )
+        return;*/
 
     remove_action( 'load-edit.php', 'filters_ui', 100 );
 
@@ -33,9 +34,13 @@ function filters_ui () {
     if ( !class_exists( 'WP_Posts_List_Table' ) )
         require_once( ABSPATH . 'wp-admin/includes/class-wp-posts-list-table.php' );
 
+    $version_dir = '3.4.x';
 
-    require_once FILTERS_DIR . 'wp/3.4.x/table.php';
-    require_once FILTERS_DIR . 'wp/3.4.x/edit.php';
+    if ( version_compare( '3.5-beta', $wp_version, '<=' ))
+        $version_dir = '3.5';
+
+    require_once FILTERS_DIR . 'wp/' . $version_dir . '/table.php';
+    require_once FILTERS_DIR . 'wp/' . $version_dir . '/edit.php';
 
     die();
 }
