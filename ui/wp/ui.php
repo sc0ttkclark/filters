@@ -21,6 +21,9 @@ function filters_ui () {
     /*if ( 'post_type_name' != $typenow )
         return;*/
 
+    include FILTERS_DIR . 'form/PodsForm.php';
+    include FILTERS_DIR . 'form/PodsField.php';
+
     remove_action( 'load-edit.php', 'filters_ui', 100 );
 
     wp_register_style( 'filters-posts-list-table', FILTERS_URL . 'ui/wp/filters-posts-list-table.css' );

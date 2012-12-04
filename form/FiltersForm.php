@@ -721,7 +721,7 @@ class FiltersForm {
             return self::$loaded[ $field_type ];
         }
 
-        include_once FILTERS_DIR . 'classes/FiltersField.php';
+        include_once FILTERS_DIR . 'form/FiltersField.php';
 
         $field_type = self::clean( $field_type, true, true );
 
@@ -729,7 +729,7 @@ class FiltersForm {
         $class_name = "FiltersField_{$class_name}";
 
         if ( !class_exists( $class_name ) ) {
-            $file = str_replace( '../', '', apply_filters( 'filters_form_field_include', FILTERS_DIR . 'classes/fields/' . basename( $field_type ) . '.php', $field_type ) );
+            $file = str_replace( '../', '', apply_filters( 'filters_form_field_include', FILTERS_DIR . 'form/fields/' . basename( $field_type ) . '.php', $field_type ) );
 
             if ( ( 0 === strpos( $file, untrailingslashit( WP_CONTENT_DIR ) ) || 0 === strpos( $file, untrailingslashit( ABSPATH ) ) ) && file_exists( $file ) )
                 include_once $file;
