@@ -286,3 +286,19 @@ function filters_var ( $var = 'last', $type = 'get', $default = null, $allowed =
 function filters_var_raw ( $var = 'last', $type = 'get', $default = null, $allowed = null, $strict = false ) {
     return filters_var( $var, $type, $default, $allowed, $strict, 'raw' );
 }
+
+/**
+ * Include a file (holdover from Pods 2.x)
+ *
+ * @param string $view Path of the file to be included
+ * @param array|null $_data (optional) Data to pass on to the template, using variable => value format
+ *
+ * @since 0.1
+ */
+function filters_view ( $_view, $_data = null ) {
+    if ( 0 === strpos( $_view, FILTERS_DIR ) ) {
+        extract( $_data, EXTR_SKIP );
+
+        include( $_view );
+    }
+}

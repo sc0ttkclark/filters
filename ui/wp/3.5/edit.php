@@ -216,7 +216,7 @@ if ( 'post' == $post_type ) {
 
 add_screen_option( 'per_page', array('label' => $title, 'default' => 20) );
 
-require_once( ABSPATH . 'wp-admin/admin-header.php');
+require_once( ABSPATH . 'wp-admin/admin-header.php' );
 ?>
 <div class="wrap">
 <?php screen_icon(); ?>
@@ -288,4 +288,4 @@ $wp_list_table->table_popup();
 </div>
 
 <?php
-include( ABSPATH . 'wp-admin/admin-footer.php');
+include( ABSPATH . 'wp-admin/admin-footer.php' );

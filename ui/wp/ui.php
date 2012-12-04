@@ -23,7 +23,7 @@ function filters_ui () {
 
     remove_action( 'load-edit.php', 'filters_ui', 100 );
 
-    wp_register_style( 'filters-posts-list-table', FILTERS_URL . 'wp/filters-posts-list-table.css' );
+    wp_register_style( 'filters-posts-list-table', FILTERS_URL . 'ui/wp/filters-posts-list-table.css' );
 
     add_action( 'admin_init', 'filters_ui_init' );
     add_action( 'admin_print_styles-edit.php', 'filters_ui_styles' );
@@ -39,8 +39,8 @@ function filters_ui () {
     if ( version_compare( '3.5-beta', $wp_version, '<=' ))
         $version_dir = '3.5';
 
-    require_once FILTERS_DIR . 'wp/' . $version_dir . '/table.php';
-    require_once FILTERS_DIR . 'wp/' . $version_dir . '/edit.php';
+    require_once FILTERS_DIR . 'ui/wp/' . $version_dir . '/table.php';
+    require_once FILTERS_DIR . 'ui/wp/' . $version_dir . '/edit.php';
 
     die();
 }

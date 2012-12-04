@@ -13,7 +13,7 @@ define( 'FILTERS_URL', plugin_dir_url( __FILE__ ) );
 define( 'FILTERS_DIR', plugin_dir_path( __FILE__ ) );
 
 include FILTERS_DIR . 'functions.php';
-include FILTERS_DIR . 'wp/ui.php';
+include FILTERS_DIR . 'ui/wp/ui.php';
 
 $filters_plugin = new Filters_Plugin();
 
