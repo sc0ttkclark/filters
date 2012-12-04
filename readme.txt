@@ -2,7 +2,7 @@
 Contributors: sc0ttkclark, logikal16
 Donate link: https://uproot.us/contributors/
 Tags: admin, filters, edit
-Requires at least: 3.5
+Requires at least: 3.4
 Tested up to: 3.5
 Stable tag: trunk
 License: GPL2
