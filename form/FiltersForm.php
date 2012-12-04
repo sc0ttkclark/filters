@@ -651,9 +651,7 @@ class FiltersForm {
      * @since 0.1
      */
     public static function permission ( $type, $name = null, $options = null, $fields = null, $pod = null, $id = null, $params = null ) {
-        $permission = filters_permission( $options );
-
-        $permission = (boolean) apply_filters( 'filters_form_field_permission', $permission, $type, $name, $options, $fields, $pod, $id, $params );
+        $permission = (boolean) apply_filters( 'filters_form_field_permission', true, $type, $name, $options, $fields, $pod, $id, $params );
 
         return $permission;
     }

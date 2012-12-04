@@ -1,8 +1,7 @@
 <?php
-if ( is_admin() && false !== strpos( $_SERVER[ 'REQUEST_URI' ], '/wp-admin/edit.php' ) && isset( $_GET[ 'post_type' ] ) ) {
+if ( is_admin() && false !== strpos( $_SERVER[ 'REQUEST_URI' ], '/wp-admin/edit.php' ) ) {
     add_action( 'load-edit.php', 'filters_ui', 100 );
     add_action( 'request', 'filters_ui_restrict' );
-    add_action( 'admin_init', 'filters_ui_thickbox' );
 }
 
 function filters_ui () {
@@ -156,6 +155,9 @@ global $menu;
 
 function filters_ui_styles () {
     wp_enqueue_style( 'filters-posts-list-table' );
+
+    wp_enqueue_style( 'thickbox' );
+    wp_enqueue_script( 'thickbox' );
 }
 
 function filters_ui_sort_fix ( $column ) {
@@ -170,8 +172,3 @@ function filters_ui_sort_fix ( $column ) {
     return $column;
 }
 add_filter( 'cpac-get-orderby-type', 'filters_ui_sort_fix' );
-
-function filters_ui_thickbox() {
-    wp_enqueue_script( 'thickbox' );
-    wp_enqueue_style( 'thickbox' );
-}

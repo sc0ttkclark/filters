@@ -371,19 +371,27 @@ class Filters_Posts_List_Table extends WP_Posts_List_Table {
                 <?php
                     }
 
-                    if ( 1 == 0 ) {
-                ?>
-                    <p>
-                        <label for="m">Month</label>
+                    $zebra = true;
 
-                        <?php $this->months_dropdown( $this->post_type_object->name ); ?>
+                    // @todo Make months optional
+                    $selected_m = filters_var_raw( 'm', 'get', '' );
+                ?>
+                    <p class="filters-ui-posts-filter-toggled filters-ui-posts-filter-m<?php echo ( $zebra ? ' clear' : '' ); ?>">
+                        <span class="filters-ui-posts-filter-toggle toggle-on<?php echo ( empty( $selected_m ) ? '' : ' hidden' ); ?>">+</span>
+                        <span class="filters-ui-posts-filter-toggle toggle-off<?php echo ( empty( $selected_m ) ? ' hidden' : '' ); ?>"><?php _e( 'Clear', 'filters' ); ?></span>
+
+                        <label for="m">
+                            <?php _e( 'Month' ); ?>
+                        </label>
+
+                        <span class="filters-ui-posts-filter<?php echo ( empty( $selected_tax ) ? ' hidden' : '' ); ?>">
+                            <?php $this->months_dropdown( $this->post_type_object->name ); ?>
+                        </span>
                     </p>
                 <?php
-                    }
+                    $zebra = empty( $zebra );
 
                     $taxonomies = get_taxonomies( array(), 'objects' );
-
-                    $zebra = true;
 
                     foreach ( $taxonomies as $taxonomy ) {
                         if ( is_object_in_taxonomy( $this->post_type_object->name, $taxonomy->name ) ) {
@@ -420,12 +428,6 @@ class Filters_Posts_List_Table extends WP_Posts_List_Table {
                             $zebra = empty( $zebra );
                         }
                     }
-                ?>
-            </div>
-
-            <div class="filters-ui-posts-filters">
-                <?php
-                    $zebra = true;
 
                     foreach ( $filters as $filter ) {
                 ?>
