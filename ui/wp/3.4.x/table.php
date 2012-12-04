@@ -488,7 +488,7 @@ class Filters_Posts_List_Table extends WP_Posts_List_Table {
                 <?php $zebra = empty( $zebra ); ?>
             </div>
 
-            <p class="submit<?php echo ( $zebra ? ' clear' : '' ); ?>"><input type="submit" value="<?php esc_attr_e( 'Search', 'filters' ); ?> Events" class="button button-primary" /></p>
+            <p class="submit<?php echo ( $zebra ? ' clear' : '' ); ?>"><input type="submit" value="<?php esc_attr_e( 'Search', 'filters' ); ?> <?php echo $this->post_type_object->label; ?>" class="button button-primary" /></p>
         </form>
     </div>
 
