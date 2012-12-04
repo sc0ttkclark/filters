@@ -1,11 +1,11 @@
 <?php
 $attributes = array();
 $attributes[ 'tabindex' ] = 2;
-$attributes = PodsForm::merge_attributes( $attributes, $name, PodsForm::$field_type, $options );
+$attributes = FiltersForm::merge_attributes( $attributes, $name, FiltersForm::$field_type, $options );
 
-$pick_limit = (int) pods_var( 'pick_limit', $options, 0 );
+$pick_limit = (int) filters_var( 'pick_limit', $options, 0 );
 
-if ( 'multi' == pods_var( 'pick_format_type', $options ) && 1 != $pick_limit ) {
+if ( 'multi' == filters_var( 'pick_format_type', $options ) && 1 != $pick_limit ) {
     $name .= '[]';
     $attributes[ 'multiple' ] = 'multiple';
 }
@@ -13,9 +13,9 @@ if ( 'multi' == pods_var( 'pick_format_type', $options ) && 1 != $pick_limit ) {
 if ( !is_array( $options[ 'data' ] ) && false !== $options[ 'data' ] && 0 < strlen( $options[ 'data' ] ) )
     $options[ 'data' ] = implode( ',', $options[ 'data' ] );
 else
-    $options[ 'data' ] = (array) pods_var_raw( 'data', $options, array(), null, true );
+    $options[ 'data' ] = (array) filters_var_raw( 'data', $options, array(), null, true );
 ?>
-<select<?php PodsForm::attributes( $attributes, $name, PodsForm::$field_type, $options ); ?>>
+<select<?php FiltersForm::attributes( $attributes, $name, FiltersForm::$field_type, $options ); ?>>
     <?php
     foreach ( $options[ 'data' ] as $option_value => $option_label ) {
         if ( is_array( $option_label ) && isset( $option_label[ 'label' ] ) )
@@ -42,7 +42,7 @@ else
 
                     if ( is_array( $sub_option_label ) ) {
                         ?>
-                        <option<?php PodsForm::attributes( $sub_option_label, $name, PodsForm::$field_type . '_option', $options ); ?>><?php echo esc_html( $sub_option_label ); ?></option>
+                        <option<?php FiltersForm::attributes( $sub_option_label, $name, FiltersForm::$field_type . '_option', $options ); ?>><?php echo esc_html( $sub_option_label ); ?></option>
                         <?php
                     }
                     else {
@@ -65,7 +65,7 @@ else
 
             if ( is_array( $option_value ) ) {
                 ?>
-                <option<?php PodsForm::attributes( $option_value, $name, PodsForm::$field_type . '_option', $options ); ?>><?php echo esc_html( $option_label ); ?></option>
+                <option<?php FiltersForm::attributes( $option_value, $name, FiltersForm::$field_type . '_option', $options ); ?>><?php echo esc_html( $option_label ); ?></option>
                 <?php
             }
             else {

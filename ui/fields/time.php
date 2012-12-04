@@ -23,18 +23,18 @@ $type = 'text';
 
 $date_type = 'time';
 
-if ( 1 == pods_var( 'time_html5', $options ) )
+if ( 1 == filters_var( 'time_html5', $options ) )
     $type = $date_type;
 
 $attributes[ 'type' ] = $type;
 $attributes[ 'tabindex' ] = 2;
 
-$format = PodsForm::field_method( 'time', 'format', $options );
+$format = FiltersForm::field_method( 'time', 'format', $options );
 
 $method = 'timepicker';
 
 $args = array(
-    'timeFormat' => $time_format[ pods_var( 'time_format', $options, 'h_mma', null, true ) ]
+    'timeFormat' => $time_format[ filters_var( 'time_format', $options, 'h_mma', null, true ) ]
 );
 
 if ( false !== stripos( $args[ 'timeFormat' ], 'tt' ) )
@@ -42,13 +42,13 @@ if ( false !== stripos( $args[ 'timeFormat' ], 'tt' ) )
 
 $html5_format = '\TH:i:s';
 
-if ( 24 == pods_var( 'time_type', $options, 12 ) )
+if ( 24 == filters_var( 'time_type', $options, 12 ) )
     $args[ 'ampm' ] = false;
 
-$date = PodsForm::field_method( 'time', 'createFromFormat', $format, (string) $value );
-$date_default = PodsForm::field_method( 'time', 'createFromFormat', 'H:i:s', (string) $value );
+$date = FiltersForm::field_method( 'time', 'createFromFormat', $format, (string) $value );
+$date_default = FiltersForm::field_method( 'time', 'createFromFormat', 'H:i:s', (string) $value );
 
-if ( 'text' != $type && ( 0 == pods_var( 'time_allow_empty', $options, 1 ) || !in_array( $value, array( '0000-00-00', '0000-00-00 00:00:00', '00:00:00' ) ) ) ) {
+if ( 'text' != $type && ( 0 == filters_var( 'time_allow_empty', $options, 1 ) || !in_array( $value, array( '0000-00-00', '0000-00-00 00:00:00', '00:00:00' ) ) ) ) {
     $formatted_date = $value;
 
     if ( false !== $date )
@@ -61,24 +61,24 @@ if ( 'text' != $type && ( 0 == pods_var( 'time_allow_empty', $options, 1 ) || !i
         $value = date_i18n( $html5_format );
 }
 
-$args = apply_filters( 'pods_form_ui_field_time_args', $args, $type, $options, $attributes, $name, PodsForm::$field_type );
+$args = apply_filters( 'filters_form_ui_field_time_args', $args, $type, $options, $attributes, $name, FiltersForm::$field_type );
 
 $attributes[ 'value' ] = $value;
 
-$attributes = PodsForm::merge_attributes( $attributes, $name, PodsForm::$field_type, $options );
+$attributes = FiltersForm::merge_attributes( $attributes, $name, FiltersForm::$field_type, $options );
 ?>
-<input<?php PodsForm::attributes( $attributes, $name, PodsForm::$field_type, $options ); ?> />
+<input<?php FiltersForm::attributes( $attributes, $name, FiltersForm::$field_type, $options ); ?> />
 <script>
     jQuery( function () {
-        var <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_args = <?php echo json_encode( $args ); ?>;
+        var <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_args = <?php echo json_encode( $args ); ?>;
 
     <?php
     if ( 'text' != $type ) {
         ?>
 
-        if ( 'undefined' == typeof pods_test_date_field_<?php echo $type; ?> ) {
+        if ( 'undefined' == typeof filters_test_date_field_<?php echo $type; ?> ) {
             // Test whether or not the browser supports date inputs
-            function pods_test_date_field_<?php echo $type; ?> () {
+            function filters_test_date_field_<?php echo $type; ?> () {
                 var input = jQuery( '<input/>', {
                     'type' : '<?php echo $type; ?>',
                     css : {
@@ -100,9 +100,9 @@ $attributes = PodsForm::merge_attributes( $attributes, $name, PodsForm::$field_t
             }
         }
 
-        if ( !pods_test_date_field_<?php echo $type; ?>() ) {
+        if ( !filters_test_date_field_<?php echo $type; ?>() ) {
             jQuery( 'input#<?php echo $attributes[ 'id' ]; ?>' ).val( '<?php echo $formatted_date; ?>' );
-            jQuery( 'input#<?php echo $attributes[ 'id' ]; ?>' ).<?php echo $method; ?>( <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_args );
+            jQuery( 'input#<?php echo $attributes[ 'id' ]; ?>' ).<?php echo $method; ?>( <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_args );
         }
 
         <?php
@@ -110,7 +110,7 @@ $attributes = PodsForm::merge_attributes( $attributes, $name, PodsForm::$field_t
     else {
         ?>
 
-        jQuery( 'input#<?php echo $attributes[ 'id' ]; ?>' ).<?php echo $method; ?>( <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_args );
+        jQuery( 'input#<?php echo $attributes[ 'id' ]; ?>' ).<?php echo $method; ?>( <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_args );
 
         <?php
     }

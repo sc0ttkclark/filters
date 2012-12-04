@@ -1,6 +1,6 @@
 <?php
-wp_enqueue_style( 'pods-select2' );
-wp_enqueue_script( 'pods-select2' );
+wp_enqueue_style( 'filters-select2' );
+wp_enqueue_script( 'filters-select2' );
 
 if ( is_array( $value ) )
     $value = implode( ',', $value );
@@ -10,44 +10,44 @@ $attributes[ 'type' ] = 'hidden';
 $attributes[ 'value' ] = $value;
 $attributes[ 'data-field-type' ] = 'select2';
 $attributes[ 'tabindex' ] = 2;
-$attributes = PodsForm::merge_attributes( $attributes, $name, PodsForm::$field_type, $options );
-$attributes[ 'class' ] .= ' pods-form-ui-field-type-select2';
+$attributes = FiltersForm::merge_attributes( $attributes, $name, FiltersForm::$field_type, $options );
+$attributes[ 'class' ] .= ' filters-form-ui-field-type-select2';
 
-$uri_hash = wp_create_nonce( 'pods_uri_' . $_SERVER[ 'REQUEST_URI' ] );
+$uri_hash = wp_create_nonce( 'filters_uri_' . $_SERVER[ 'REQUEST_URI' ] );
 
 $uid = @session_id();
 
 if ( is_user_logged_in() )
     $uid = 'user_' . get_current_user_id();
 
-$field_nonce = wp_create_nonce( 'pods_relationship_' . ( !is_object( $pod ) ? '0' : $pod->pod_id ) . '_' . $uid . '_' . $uri_hash . '_' . $options[ 'id' ] );
+$field_nonce = wp_create_nonce( 'filters_relationship_' . ( !is_object( $pod ) ? '0' : $pod->pod_id ) . '_' . $uid . '_' . $uri_hash . '_' . $options[ 'id' ] );
 
-$pick_limit = (int) pods_var( 'pick_limit', $options, 0 );
+$pick_limit = (int) filters_var( 'pick_limit', $options, 0 );
 
-if ( 'multi' == pods_var( 'pick_format_type', $options ) && 1 != $pick_limit )
+if ( 'multi' == filters_var( 'pick_format_type', $options ) && 1 != $pick_limit )
     wp_enqueue_script( 'jquery-ui-sortable' );
 
-$options[ 'data' ] = (array) pods_var_raw( 'data', $options, array(), null, true );
+$options[ 'data' ] = (array) filters_var_raw( 'data', $options, array(), null, true );
 ?>
-<div class="pods-select2">
-    <input<?php PodsForm::attributes( $attributes, $name, PodsForm::$field_type, $options ); ?> />
+<div class="filters-select2">
+    <input<?php FiltersForm::attributes( $attributes, $name, FiltersForm::$field_type, $options ); ?> />
 </div>
 
 <script type="text/javascript">
     jQuery( function ( $ ) {
-        if ( typeof pods_ajaxurl === "undefined" ) {
-            var pods_ajaxurl = "<?php echo admin_url( 'admin-ajax.php?pods_ajax=1' ); ?>";
+        if ( typeof filters_ajaxurl === "undefined" ) {
+            var filters_ajaxurl = "<?php echo admin_url( 'admin-ajax.php?filters_ajax=1' ); ?>";
         }
 
-        function <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_podsFormatResult ( item ) {
+        function <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_podsFormatResult ( item ) {
             return item.text;
         }
 
-        function <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_podsFormatSelection ( item ) {
+        function <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_podsFormatSelection ( item ) {
             return item.text;
         }
 
-        var <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_data = {<?php
+        var <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_data = {<?php
                 if ( !is_object( $pod ) || !empty( $options[ 'data' ] ) ) {
                     $data = array();
 
@@ -68,12 +68,12 @@ $options[ 'data' ] = (array) pods_var_raw( 'data', $options, array(), null, true
                 jQuery( element.val().split( "," ) ).each( function () {
                     data.push( {
                         id : this,
-                        text : <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_data[ this ].text
+                        text : <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_data[ this ].text
                     } );
                 } );
 
                 <?php
-                    if ( 'multi' == pods_var( 'pick_format_type', $options ) && 1 != $pick_limit ) {
+                    if ( 'multi' == filters_var( 'pick_format_type', $options ) && 1 != $pick_limit ) {
                 ?>
                     callback( data );
                 <?php
@@ -87,13 +87,13 @@ $options[ 'data' ] = (array) pods_var_raw( 'data', $options, array(), null, true
                 ?>
             },
             <?php
-               if ( 1 != (int) pods_var( 'required', $options ) ) {
+               if ( 1 != (int) filters_var( 'required', $options ) ) {
             ?>
                 allowClear : true,
             <?php
                }
 
-                if ( 'multi' == pods_var( 'pick_format_type', $options ) && 1 != $pick_limit ) {
+                if ( 'multi' == filters_var( 'pick_format_type', $options ) && 1 != $pick_limit ) {
             ?>
                 placeholder : '<?php echo esc_js( __( 'Start Typing...', 'pods' ) ); ?>',
                 multiple : true,
@@ -125,13 +125,13 @@ $options[ 'data' ] = (array) pods_var_raw( 'data', $options, array(), null, true
                 if ( empty( $options[ 'data' ] ) || ( isset( $ajax ) && $ajax ) ) {
             ?>
                 ajax : {
-                    url : pods_ajaxurl,
+                    url : filters_ajaxurl,
                     type : 'POST',
                     dataType : 'json',
                     data : function ( term, page ) {
                         return {
                             _wpnonce : '<?php echo $field_nonce; ?>',
-                            action : 'pods_relationship',
+                            action : 'filters_relationship',
                             method : 'select2',
                             pod : '<?php echo (int) $pod->pod_id; ?>',
                             field : '<?php echo (int) $options[ 'id' ]; ?>',
@@ -151,8 +151,8 @@ $options[ 'data' ] = (array) pods_var_raw( 'data', $options, array(), null, true
                         return data;
                     }
                 },
-                formatResult : <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_podsFormatResult,
-                formatSelection : <?php echo pods_clean_name( $attributes[ 'id' ] ); ?>_podsFormatSelection,
+                formatResult : <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_podsFormatResult,
+                formatSelection : <?php echo filters_clean_name( $attributes[ 'id' ] ); ?>_podsFormatSelection,
                 minimumInputLength : 1
             <?php
                 }
@@ -164,7 +164,7 @@ $options[ 'data' ] = (array) pods_var_raw( 'data', $options, array(), null, true
             ?>
         } );
 
-        <?php if ( 'multi' == pods_var( 'pick_format_type', $options ) && 1 != $pick_limit ) { ?>
+        <?php if ( 'multi' == filters_var( 'pick_format_type', $options ) && 1 != $pick_limit ) { ?>
             $element.select2("container").find("ul.select2-choices").sortable({
                 containment: 'parent',
                 start: function() { $element.select2("onSortStart"); },

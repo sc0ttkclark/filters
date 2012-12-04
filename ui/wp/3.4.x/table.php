@@ -74,10 +74,11 @@ class Filters_Posts_List_Table extends WP_Posts_List_Table {
         $total_posts = array_sum( (array) $num_posts );
 
         // Subtract post types that are not included in the admin all list.
-        foreach ( get_post_stati( array( 'show_in_admin_all_list' => false ) ) as $state )
+        foreach ( get_post_stati( array( 'show_in_admin_all_list' => false ) ) as $state ) {
             $total_posts -= $num_posts->$state;
+        }
 
-        $class = empty( $class ) && ( 'all' == $_REQUEST[ 'post_status' ] || empty( $_REQUEST[ 'post_status' ] ) ) && empty( $_REQUEST[ 'show_sticky' ] ) ? ' class="current"' : '';
+        $class = ( empty( $class ) && ( isset( $_REQUEST[ 'post_status' ] ) && 'all' == $_REQUEST[ 'post_status' ] || empty( $_REQUEST[ 'post_status' ] ) ) && empty( $_REQUEST[ 'show_sticky' ] ) ) ? ' class="current"' : '';
         $url = filters_var_update( array( 'post_type' => $post_type, 'post_status' => '', 'all_posts' => ( empty( $allposts ) ? '' : 1 ), 'paged' => '', 'action' => '', 'action2' => '' ), null, array( 'paged', 'action', 'action2' ) );
         $status_links[ 'all' ] = "<a href='{$url}'$class>" . sprintf( _nx( 'All <span class="count">(%s)</span>', 'All <span class="count">(%s)</span>', $total_posts, 'posts' ), number_format_i18n( $total_posts ) ) . '</a>';
 

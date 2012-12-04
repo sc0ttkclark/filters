@@ -10,15 +10,15 @@ $attributes = array();
 $attributes[ 'type' ] = 'text';
 $attributes[ 'value' ] = $value;
 $attributes[ 'tabindex' ] = 2;
-$attributes = PodsForm::merge_attributes( $attributes, $name, PodsForm::$field_type, $options );
+$attributes = FiltersForm::merge_attributes( $attributes, $name, FiltersForm::$field_type, $options );
 ?>
-<input<?php PodsForm::attributes( $attributes, $name, PodsForm::$field_type, $options ); ?> />
+<input<?php FiltersForm::attributes( $attributes, $name, FiltersForm::$field_type, $options ); ?> />
 
 <script type="text/javascript">
     jQuery( function () {
         jQuery( '#color_<?php echo $attributes[ 'id' ]; ?>' ).hide();
 
-        var pods_wp_color_obj_<?php echo pods_clean_name( $attributes[ 'id' ] ); ?> = jQuery( '#<?php echo $attributes[ 'id' ]; ?>' ).wpColorPicker();
+        var filters_wp_color_obj_<?php echo filters_clean_name( $attributes[ 'id' ] ); ?> = jQuery( '#<?php echo $attributes[ 'id' ]; ?>' ).wpColorPicker();
 
         jQuery( '#<?php echo $attributes[ 'id' ]; ?>' ).on( 'focus blur', function () {
             jQuery( '#color_<?php echo $attributes[ 'id' ]; ?>' ).slideToggle();
@@ -28,7 +28,7 @@ $attributes = PodsForm::merge_attributes( $attributes, $name, PodsForm::$field_t
             var color = jQuery( this ).val();
 
             if ( '' != color.replace( '#', '' ) && color.match( '#' ) )
-                pods_wp_color_obj_<?php echo pods_clean_name( $attributes[ 'id' ] ); ?>.wpColorPicker( 'color', color );
+                filters_wp_color_obj_<?php echo filters_clean_name( $attributes[ 'id' ] ); ?>.wpColorPicker( 'color', color );
         } );
     } );
 </script>
