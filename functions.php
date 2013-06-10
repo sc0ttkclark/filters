@@ -302,3 +302,32 @@ function filters_view ( $_view, $_data = null ) {
         include( $_view );
     }
 }
+
+/**
+ * Return a lowercase alphanumeric name (with underscores)
+ *
+ * @param string $orig Input string to clean
+ * @param boolean $lower Force lowercase
+ * @param boolean $trim_underscores Whether to trim off underscores
+ *
+ * @return string Sanitized name
+ *
+ * @since 0.1
+ */
+function filters_clean_name ( $orig, $lower = true, $trim_underscores = true ) {
+    $str = preg_replace( "/([- ])/", "_", trim( $orig ) );
+
+    if ( $lower )
+        $str = strtolower( $str );
+
+    $str = preg_replace( "/([^0-9a-zA-Z_])/", "", $str );
+    $str = preg_replace( "/(_){2,}/", "_", $str );
+    $str = trim( $str );
+
+    if ( $trim_underscores )
+        $str = trim( $str, '_' );
+
+    $str = apply_filters( 'filters_clean_name', $str, $orig, $lower );
+
+    return $str;
+}

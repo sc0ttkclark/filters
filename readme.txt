@@ -2,9 +2,9 @@
 Contributors: sc0ttkclark, logikal16
 Donate link: http://podsfoundation.org/donate/
 Tags: admin, filters, edit
-Requires at least: 3.4
-Tested up to: 3.5
-Stable tag: trunk
+Requires at least: 3.5
+Tested up to: 3.5.1
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ A flexible replacement for the default WordPress post management. Takes over edi
 
 This plugin lets you use an enhanced UI for your post types search/filtering to really clean up the experience.
 
-It is a prototype right now, there are no options and there may be a few bugs as it's tested across more environments.
+It is pretty basic right now, there are no options and there may be a few bugs as it's tested across more environments.
 
 == Installation ==
 
@@ -31,6 +31,18 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 2. The advanced filtering pop-up
 
 == Changelog ==
+
+= 0.2 =
+* Added: Pods integration, now automatically pulls filters from the post type, if it's created/extended by Pods
+* Added: New compare / relation handling in query parameters available, form UI has not been updated to reflect the new options: filters_relation (and/or) and filters_compare_fieldname (see WP_Query meta_query)
+* Added: New filter - filters_post_type_blacklist - Provide an array of post types to exclude from the enhanced UI
+* Added: New filter - filters_ui_fields - Provide an array of field data to use
+* Added: New filter - filters_ui_filters - Provide an array of filters to use (utilizes field data)
+* Added: New filter - filters_ui_views - Provide an array of 'view' => 'Label' to use (defaults to post statuses)
+* Added: New filter - filters_ui_popup_months - Provide null, false, or empty string to exclude the 'Months' input in the filters popup
+* Improved: Cleaned up the Filters_Posts_List_Table class a bit, abstracted for fields/filters data (for Pods integration)
+* Fixed: CSS fixes for WP 3.5
+* Removed: No longer offering support for WP 3.4
 
 = 0.1 =
 * Alpha release, to get things rolling!

@@ -110,6 +110,11 @@
 
 .filters-ui-filter-bar-primary p.search-box {
     margin: 0;
+    line-height: 36px;
+}
+
+.filters-ui-filter-bar-primary p.search-box input[name="s"] {
+    margin-top: 6px;
 }
 
 .filters-ui-filter-bar-primary p.search-box a.filters-ui-filter-reset {
@@ -272,7 +277,7 @@
 }
 
 .filters-ui-posts-filter-popup p.submit {
-    margin-top: 30px;
+    margin-top: 20px;
     padding-bottom: 0;
     border-bottom: none;
 }
@@ -284,6 +289,7 @@
 .filters-ui-posts-filter-popup p.submit input.button {
     font-size: 13px !important;
     padding: 5px 32px;
+    height: auto;
 }
 
 .filters-ui-posts-filter-popup p:after
