@@ -46,10 +46,10 @@ function filters_ui () {
     if ( !class_exists( 'WP_Posts_List_Table' ) )
         require_once( ABSPATH . 'wp-admin/includes/class-wp-posts-list-table.php' );
 
-    $version_dir = '3.5.x';
+    $version_dir = '3.6.x';
 
-    if ( version_compare( '3.6-beta', $wp_version, '<=' ) )
-        $version_dir = '3.6.x';
+	if ( version_compare( '3.7', $wp_version, '<=' ) )
+        $version_dir = '3.7.x';
 
     //require_once FILTERS_DIR . 'ui/wp/' . $version_dir . '/table.php';
     require_once FILTERS_DIR . 'ui/wp/' . $version_dir . '/edit.php';
@@ -61,6 +61,8 @@ function filters_ui_fields_filters ( $post_type, $where, $request = null ) {
     $filters = array();
     $fields = array();
 
+	$pod = null;
+
     // Pods integration
     if ( function_exists( 'pods_api' ) ) {
         $api = pods_api();
@@ -70,14 +72,66 @@ function filters_ui_fields_filters ( $post_type, $where, $request = null ) {
         if ( !empty( $pod ) && 'post_type' == $pod[ 'type' ] ) {
             $fields = $pod[ 'fields' ];
 
-            $filters = apply_filters( 'filters_pods_filters', array(), $pod );
+			foreach ( $fields as $field => $field_data ) {
+				$fields[ $field ][ 'from' ] = 'pods';
+			}
+
+            $filters = apply_filters( 'filters_pods_filters', null, $pod, $fields );
 
             if ( null === $filters || false === $filters )
                 $filters = array_keys( $fields ); // allow filters for all fields
             elseif ( empty( $filters ) )
                 $filters = array();
         }
+		else {
+			$pod = null;
+		}
     }
+
+	// CFS integration
+	/**
+	 * @var Custom_Field_Suite
+	 */
+	global $cfs;
+
+	if ( is_object( $cfs ) ) {
+		$rules = array(
+			'post_types' => $post_type
+		);
+
+		$groups = $cfs->api->get_matching_groups( $rules );
+
+		$cfs_fields = array();
+		$cfs_filters = array();
+
+		if ( !empty( $groups ) ) {
+			$groups = array_keys( $groups );
+
+			$cfs_inputs = $cfs->api->find_input_fields( array( 'post_id' => $groups ) );
+
+			// needs Pods-style field array
+			if ( !empty( $cfs_inputs ) ) {
+				foreach ( $cfs_inputs as $cfs_input ) {
+					$cfs_fields[ $cfs_input[ 'name' ] ] = array(
+						'name' => $cfs_input[ 'name' ],
+						'label' => $cfs_input[ 'label' ],
+						'type' => 'text',
+						'from' => 'cfs'
+					);
+				}
+			}
+
+            $cfs_filters = apply_filters( 'filters_cfs_filters', null, $groups, $cfs_inputs );
+
+            if ( null === $cfs_filters || false === $cfs_filters )
+                $cfs_filters = array_keys( $cfs_fields ); // allow filters for all fields
+            elseif ( empty( $filters ) )
+                $cfs_filters = array();
+		}
+
+		$fields = array_merge( $fields, $cfs_fields );
+		$filters = array_merge( $filters, $cfs_filters );
+	}
 
     $filters = apply_filters( 'filters_ui_filters',
                               apply_filters( 'filters_ui_filters_' . $post_type,
@@ -91,7 +145,7 @@ function filters_ui_fields_filters ( $post_type, $where, $request = null ) {
                                             $filters, $where, $request ),
                              $filters, $where, $request );
 
-    return array( 'filters' => $filters, 'fields' => $fields );
+    return array( 'filters' => $filters, 'fields' => $fields, 'pod' => $pod );
 }
 
 function filters_ui_restrict ( $request ) {
@@ -156,15 +210,30 @@ function filters_ui_restrict ( $request ) {
     $fields = $fields_filters[ 'fields' ];
 
     foreach ( $filters as $filter ) {
+		if ( !apply_filters( 'filters_compare_allow_empty', false, $filter, $fields[ $filter ] ) ) {
+			if ( in_array( $fields[ $filter ][ 'type' ], array( 'date', 'datetime', 'time' ) ) ) {
+				if ( '' == filters_var_raw( 'filter_' . $filter . '_start', 'get', '', null, true ) && '' == filters_var_raw( 'filter_' . $filter . '_end', 'get', '', null, true ) ) {
+					continue;
+				}
+			}
+			elseif ( '' === filters_var_raw( 'filter_' . $filter, 'get', '' ) ) {
+				continue;
+			}
+		}
+
         $default_search = true;
 
-        $compare = strtoupper( filters_var_raw( 'filters_compare_' . $filter, 'get', '', null, true ) );
+        $compare = strtoupper( filters_var_raw( 'filters_compare_' . $filter, 'get', 'LIKE', null, true ) );
 
         // Restrict to supported comparisons
         if ( !in_array( $compare, array( '=', '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN', 'BETWEEN', 'NOT BETWEEN', 'EXISTS', 'NOT EXISTS' ) ) )
-            $compare = '=';
+            $compare = 'LIKE';
         else
             $default_search = false;
+
+		if ( 'pick' == $fields[ $filter ][ 'type' ] ) {
+			$compare = '=';
+		}
 
         $value = filters_var_raw( 'filter_' . $filter, 'get', '', null, true );
 

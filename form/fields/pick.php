@@ -69,7 +69,7 @@ class FiltersField_Pick extends FiltersField {
                         'dropdown' => __( 'Drop Down', 'filters' ),
                         'radio' => __( 'Radio Buttons', 'filters' ),
                         'autocomplete' => __( 'Autocomplete', 'filters' )
-                    ) + ( ( defined( 'FILTERS_DEVELOPER' ) && FILTERS_DEVELOPER ) ? array( 'flexible' => __( 'Flexible', 'filters' ) ) : array() )
+					)
                 ),
                 'dependency' => true
             ),
@@ -85,7 +85,7 @@ class FiltersField_Pick extends FiltersField {
                         'checkbox' => __( 'Checkboxes', 'filters' ),
                         'multiselect' => __( 'Multi Select', 'filters' ),
                         'autocomplete' => __( 'Autocomplete', 'filters' )
-                    ) + ( ( defined( 'FILTERS_DEVELOPER' ) && FILTERS_DEVELOPER ) ? array( 'flexible' => __( 'Flexible', 'filters' ) ) : array() )
+                    )
                 ),
                 'dependency' => true
             ),

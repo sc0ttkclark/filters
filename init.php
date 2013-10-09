@@ -3,7 +3,7 @@
 Plugin Name: Filters
 Plugin URI: http://wordpress.org/plugins/filters/
 Description: A flexible replacement to WordPress admin post listing filters.
-Version: 0.2
+Version: 0.3
 Author: Scott Kingsley Clark
 Author URI: https://scottkclark.com/
 License: GPL2

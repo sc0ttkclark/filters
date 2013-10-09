@@ -3,8 +3,8 @@ Contributors: sc0ttkclark, logikal16
 Donate link: http://podsfoundation.org/donate/
 Tags: admin, filters, edit
 Requires at least: 3.5
-Tested up to: 3.5.1
-Stable tag: 0.2
+Tested up to: 3.7
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,12 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 2. The advanced filtering pop-up
 
 == Changelog ==
+
+= 0.3 =
+* Added: Custom Field Suite integration, now automatically pulls filters from the post type, if it has fields valid for CFS
+* Added: Added support for WP 3.7
+* Improved: Pods integration now better for relationship fields
+* Removed: No longer offering support for WP 3.5
 
 = 0.2 =
 * Added: Pods integration, now automatically pulls filters from the post type, if it's created/extended by Pods

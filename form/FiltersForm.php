@@ -121,7 +121,7 @@ class FiltersForm {
     /**
      * Output a hidden field
      */
-    protected function field_hidden ( $name, $value = null, $options = null ) {
+    protected static function field_hidden ( $name, $value = null, $options = null ) {
         ob_start();
 
         filters_view( FILTERS_DIR . 'ui/fields/_hidden.php', compact( array_keys( get_defined_vars() ) ) );
