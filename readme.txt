@@ -2,7 +2,7 @@
 Contributors: sc0ttkclark, logikal16
 Donate link: http://podsfoundation.org/donate/
 Tags: admin, filters, edit
-Requires at least: 3.5
+Requires at least: 3.6
 Tested up to: 3.7
 Stable tag: 0.3
 License: GPLv2 or later
