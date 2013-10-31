@@ -1,5 +1,6 @@
 <?php
 /**
+ * 
  * Create a new URL off of the current one, with updated parameters
  *
  * @param array $array Parameters to be set (empty will remove it)
