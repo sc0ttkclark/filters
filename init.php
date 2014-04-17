@@ -12,23 +12,25 @@ License: GPL2
 define( 'FILTERS_URL', plugin_dir_url( __FILE__ ) );
 define( 'FILTERS_DIR', plugin_dir_path( __FILE__ ) );
 
-class Filters_Plugin
-{
-    public static $active_filters = array();
+class Filters_Plugin {
 
-    function __construct () {
+	public static $active_filters = array();
 
-    }
+	function __construct() {
 
-    function admin_init () {
-        global $pagenow;
+	}
 
-        if ( 'edit.php' == $pagenow ) {
-            include_once FILTERS_DIR . 'functions.php';
-            include_once FILTERS_DIR . 'ui/wp/ui.php';
-            include_once FILTERS_DIR . 'ui/wp/table.php';
-        }
-    }
+	function admin_init() {
+
+		global $pagenow;
+
+		if ( 'edit.php' == $pagenow ) {
+			include_once FILTERS_DIR . 'functions.php';
+			include_once FILTERS_DIR . 'ui/wp/ui.php';
+		}
+
+	}
+
 }
 
 global $filters_plugin;

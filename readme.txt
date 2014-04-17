@@ -2,9 +2,9 @@
 Contributors: sc0ttkclark, logikal16
 Donate link: http://podsfoundation.org/donate/
 Tags: admin, filters, edit
-Requires at least: 3.6
-Tested up to: 3.7
-Stable tag: 0.3
+Requires at least: 3.8
+Tested up to: 3.9
+Stable tag: 0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,11 @@ OR you can just install it with WordPress by going to Plugins >> Add New >> and 
 2. The advanced filtering pop-up
 
 == Changelog ==
+
+= 0.4 =
+* Added: Added support for WP 3.8 and 3.9
+* Removed: No longer offering support for WP 3.6 or 3.7
+* Coming soon: Modal based filtering, and the new WP 3.9 theme browser bar to replace the Filters bar
 
 = 0.3 =
 * Added: Custom Field Suite integration, now automatically pulls filters from the post type, if it has fields valid for CFS
